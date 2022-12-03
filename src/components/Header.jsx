@@ -1,5 +1,4 @@
-/* eslint-disable jsx-a11y/anchor-has-content */
-/* eslint-disable react/react-in-jsx-scope */
+
 import logoSvg from '../assets/img/pizza-logo.svg';
 import { Link } from 'react-router-dom'
 import Search from './Search/index';
