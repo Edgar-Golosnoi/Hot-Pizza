@@ -1,9 +1,13 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react/react-in-jsx-scope */
-import React from 'react'
+
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
 
-function Sort({value, onChangeSort}) {
+function Sort() {
+  const dispatch = useDispatch();
+  const sort = useSelector(state => state.filter.sort)
+
   const [open, setOpen]= React.useState(false);
   const list = [
   { name: ' популярности', sortProperty: 'rating'},
@@ -14,8 +18,8 @@ function Sort({value, onChangeSort}) {
   { name: ' алфавиту', sortProperty: '-title'}
 ];
 
-  const onClickListItem = (el) => {
-    onChangeSort(el);
+  const onClickListItem = (obj) => {
+    dispatch(setSort(obj));
     setOpen(false);
   };
 
@@ -32,7 +36,7 @@ function Sort({value, onChangeSort}) {
           xmlns="http://www.w3.org/2000/svg">
           </svg>
           <b> Сортировкапа по:</b>
-          <span onClick={() => setOpen(!open)}>{value.name}</span>
+          <span onClick={() => setOpen(!open)}>{sort.name}</span>
         </div>
         {open && (
         <div className="sort_popup">
@@ -41,7 +45,7 @@ function Sort({value, onChangeSort}) {
             // eslint-disable-next-line no-undef
             <li key={i}
             onClick={() => onClickListItem(obj)}
-            className={value.sortProperty === obj.sortProperty ? 'active' : ''}>
+            className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>
             {obj.name}
             </li>
           ))}
