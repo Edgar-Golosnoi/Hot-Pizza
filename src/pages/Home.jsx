@@ -8,6 +8,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
 import { useSelector,useDicpatch } from 'react-redux';
 import { setCategoriId } from '../redux/slices/filterSlice';
+import axios from 'axios';
 
 const Home = ({searchValue}) => {
   const dispatch = useDicpatch ();
@@ -34,16 +35,29 @@ const Home = ({searchValue}) => {
   const search = searchValue ? `&search=${searchValue}` : '';
 
 
-  fetch(
-    `https://637e08319c2635df8f96d2cb.mockapi.io/items?page=${currentPage}${category}&sortBy=${sortBy}&order=${order}${search}`,
-  )
-  .then((res) => res.json())
-  .then((arr) => {
-    setItems(arr);
+//   fetch(
+//     `https://637e08319c2635df8f96d2cb.mockapi.io/items?page=${currentPage}${category}&sortBy=${sortBy}&order=${order}${search}`,
+//   )
+//   .then((res) => res.json())
+//   .then((arr) => {
+//     setItems(arr);
+//     setIsloading(false);
+//   });
+//   window.scrollTo(0, 0);
+// }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
+
+axios
+    .get(`https://637e08319c2635df8f96d2cb.mockapi.io/items?page=${currentPage}${category}&sortBy=${sortBy}&order=${order}${search}`
+    )
+    .then((response) => {
+    setItems(response.data);
     setIsloading(false);
-  });
-  window.scrollTo(0, 0);
-}, [categoryId, sort.sortProperty, searchValue, currentPage]);
+    });
+    
+    window.scrollTo(0, 0);
+  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
 
