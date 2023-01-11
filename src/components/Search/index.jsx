@@ -18,7 +18,8 @@ const Search = () => {
   const updateSearhcValue =  React.useCallback(
     debounce((str) => {
       setSearchValue(str);
-    }, 1000),
+      setValue(str);
+    }, 300),
     [],
   );
 
